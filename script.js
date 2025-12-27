@@ -2,7 +2,8 @@
 
 ///////////////////////////////////////
 // Modal window
-
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
 const modal = document.querySelector(".modal");
 const overlay = document.querySelector(".overlay");
 const btnCloseModal = document.querySelector(".btn--close-modal");
@@ -35,6 +36,75 @@ document.addEventListener("keydown", function (e) {
     closeModal();
   }
 });
+
+///////////////////////////////////////
+//?Scrolling
+//? Impementing smooth scrolling
+
+
+btnScrollTo.addEventListener("click", function (e) {
+  const s1cords = section1.getBoundingClientRect()
+  console.log(s1cords.left, s1cords.top);
+
+  console.log(e.target.getBoundingClientRect());
+  console.log('Current scroll (x/y)', window.pageXOffset, window.pageYOffset);
+
+  console.log('height/width viewport', document.documentElement.clientHeight, document.documentElement.clientWidth);
+
+  //?scrolling
+  // window.scrollTo(s1cords.left + window.pageXOffset, s1cords.top + window.pageYOffset)
+  // window.scrollTo(s1cords.left , s1cords.top)
+  // window.scrollTo({
+  //   left: s1cords.left + window.pageXOffset,
+  //   top: s1cords.top + window.pageYOffset,
+  //   behavior: 'smooth'
+  // });
+
+  //? modern way
+  section1.scrollIntoView({behavior: "smooth"})
+});
+
+
+///////////////////////////////////////
+//? page navigation
+
+// document.querySelectorAll(".nav__link").forEach(function (el) {
+//   el.addEventListener('click', function (e) {
+//     e.preventDefault();
+//     console.log("LINK");
+//     const id = this.getAttribute("href");
+//     console.log(id);
+//     document.querySelector(id).scrollIntoView({ behavior: "smooth" });
+//   })
+// })
+
+//? using event delegation for page navigation instead
+//?Steps
+//?1. Add event listener to common parent element
+//?2. Determine what element originated the event
+
+
+
+
+document.querySelector(".nav__links").addEventListener("click", function(e){
+  e.preventDefault();
+
+
+  const targetEl = e.target
+
+  document.querySelectorAll(".nav__link").forEach(function(el){
+    el.classList.remove("active__link")
+    console.log(el);
+  })
+
+  targetEl.classList.add("active__link")
+
+  if(targetEl.classList.contains("nav__link")){
+    const id = targetEl.getAttribute("href");
+    document.querySelector(id).scrollIntoView({ behavior: "smooth" });
+  }
+})
+
 
 // console.log(document.documentElement.style.fontSize = "16px");
 // console.log(document.head);
@@ -106,59 +176,35 @@ document.addEventListener("keydown", function (e) {
 
 
 
-//? Impementing smooth scrolling
-const btnScrollTo = document.querySelector(".btn--scroll-to");
-const section1 = document.querySelector("#section--1");
-
-btnScrollTo.addEventListener("click", function (e) {
-  const s1cords = section1.getBoundingClientRect()
-  console.log(s1cords.left, s1cords.top);
-
-  console.log(e.target.getBoundingClientRect());
-  console.log('Current scroll (x/y)', window.pageXOffset, window.pageYOffset);
-
-  console.log('height/width viewport', document.documentElement.clientHeight, document.documentElement.clientWidth);
-
-  //?scrolling
-  // window.scrollTo(s1cords.left + window.pageXOffset, s1cords.top + window.pageYOffset)
-  // window.scrollTo(s1cords.left , s1cords.top)
-  // window.scrollTo({
-  //   left: s1cords.left + window.pageXOffset,
-  //   top: s1cords.top + window.pageYOffset,
-  //   behavior: 'smooth'
-  // });
-
-  //? modern way
-  section1.scrollIntoView({behavior: "smooth"})
-});
 
 
-const randomInt = (min, max) =>
-  Math.floor(Math.random() * (max - min + 1) + min); 
 
-const randomColor = () => `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+// const randomInt = (min, max) =>
+//   Math.floor(Math.random() * (max - min + 1) + min); 
 
-console.log(randomColor());
+// const randomColor = () => `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
 
-document.querySelector(".nav__link").addEventListener("click", function (e) {
-  e.preventDefault();
-  this.style.backgroundColor = randomColor();
-  console.log("LINK", e.target, e.currentTarget);
-  console.log(e.target === this);
+// console.log(randomColor());
 
-  //?Stop propagation
-  // e.stopPropagation();
-})
+// document.querySelector(".nav__link").addEventListener("click", function (e) {
+//   e.preventDefault();
+//   this.style.backgroundColor = randomColor();
+//   console.log("LINK", e.target, e.currentTarget);
+//   console.log(e.target === this);
 
-document.querySelector(".nav__links").addEventListener("click", function (e) {
-  e.preventDefault();
-  this.style.backgroundColor = randomColor();
-  console.log("CONTAINER", e.target, e.currentTarget);
-  // console.log(e.currentTarget === this);
-})
+//   ?Stop propagation
+//   e.stopPropagation();
+// })
 
-document.querySelector('.nav').addEventListener('click', function (e) {
-  e.preventDefault();
-  this.style.backgroundColor = randomColor();
-  console.log('NAV', e.target, e.currentTarget);
-}, true)
+// document.querySelector(".nav__links").addEventListener("click", function (e) {
+//   e.preventDefault();
+//   this.style.backgroundColor = randomColor();
+//   console.log("CONTAINER", e.target, e.currentTarget);
+//   // console.log(e.currentTarget === this);
+// })
+
+// document.querySelector('.nav').addEventListener('click', function (e) {
+//   e.preventDefault();
+//   this.style.backgroundColor = randomColor();
+//   console.log('NAV', e.target, e.currentTarget);
+// }, true)
