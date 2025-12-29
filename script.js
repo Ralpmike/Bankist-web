@@ -8,6 +8,10 @@ const modal = document.querySelector(".modal");
 const overlay = document.querySelector(".overlay");
 const btnCloseModal = document.querySelector(".btn--close-modal");
 const btnsOpenModal = document.querySelectorAll(".btn--show-modal");
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+const nav = document.querySelector('.nav');
 
 const openModal = function () {
   modal.classList.toggle("hidden");
@@ -106,11 +110,6 @@ document.querySelector(".nav__links").addEventListener("click", function(e){
 const h1 = document.querySelector("h1")
 
 //? tabbed component
-const tabs = document.querySelectorAll(".operations__tab");
-const tabsContainer = document.querySelector(".operations__tab-container");
-const tabsContent = document.querySelectorAll(".operations__content");
-
-
 tabsContainer.addEventListener('click', function(e){
   const tabElem = e.target.closest('.operations__tab');
 
@@ -137,7 +136,58 @@ tabsContainer.addEventListener('click', function(e){
   console.log(tabContent);
 })
 
+//? Menu fade animation
 
+const handleHover = function(e){
+  if(e.target.classList.contains('nav__link')){
+    const link = e.target;
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    const logo = link.closest('.nav').querySelector('img')
+    siblings.forEach(sibling => {
+      if(sibling !== link){
+        sibling.style.opacity = this
+      }
+    })
+    logo.style.opacity = this
+  }
+}
+
+//? passing "arguments" into callback functions
+nav.addEventListener('mouseover', 
+//   function(e){
+//   if(e.target.classList.contains('nav__link')){
+//     const link = e.target;
+//     console.log(link);
+//     const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+//     const logo = link.closest('.nav').querySelector('img')
+//     console.log(siblings);
+
+//     siblings.forEach(sibling => {
+//       if(sibling !== link){
+//         sibling.style.opacity = 0.5
+//       }
+//     })
+
+//     logo.style.opacity = 0.5
+//   }
+// }
+handleHover.bind(0.5)
+)
+
+nav.addEventListener('mouseout', 
+//   function(e){
+//   if(e.target.classList.contains('nav__link')){
+//     const link = e.target;
+//     const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+//     const logo = link.closest('.nav').querySelector('img')
+//     siblings.forEach(sibling => {
+//       sibling.style.opacity = 1
+//     })
+//     logo.style.opacity = 1
+//   }
+// }
+handleHover.bind(1)
+)
 
 // console.log(document.documentElement.style.fontSize = "16px");
 // console.log(document.head);
