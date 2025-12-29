@@ -189,6 +189,21 @@ nav.addEventListener('mouseout',
 handleHover.bind(1)
 )
 
+
+
+//?Sticky Navigation
+
+const initialCord = section1.getBoundingClientRect();
+window.addEventListener("scroll", function(){
+  if(this.window.scrollY > initialCord.top){
+    nav.classList.add("sticky")
+  }else{
+    nav.classList.remove("sticky")
+  }
+  console.log(initialCord);
+  console.log(window.scrollY);
+})
+
 // console.log(document.documentElement.style.fontSize = "16px");
 // console.log(document.head);
 // console.log(document.body);
