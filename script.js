@@ -83,12 +83,8 @@ btnScrollTo.addEventListener("click", function (e) {
 //?1. Add event listener to common parent element
 //?2. Determine what element originated the event
 
-
-
-
 document.querySelector(".nav__links").addEventListener("click", function(e){
   e.preventDefault();
-
 
   const targetEl = e.target
 
@@ -104,6 +100,43 @@ document.querySelector(".nav__links").addEventListener("click", function(e){
     document.querySelector(id).scrollIntoView({ behavior: "smooth" });
   }
 })
+
+
+//?DOM traversing
+const h1 = document.querySelector("h1")
+
+//? tabbed component
+const tabs = document.querySelectorAll(".operations__tab");
+const tabsContainer = document.querySelector(".operations__tab-container");
+const tabsContent = document.querySelectorAll(".operations__content");
+
+
+tabsContainer.addEventListener('click', function(e){
+  const tabElem = e.target.closest('.operations__tab');
+
+  //?guard clause
+  if(!tabElem) return
+  console.log(tabElem);
+
+  //? Remove active classes
+  tabs.forEach(tab =>
+    tab.classList.remove('operations__tab--active')
+  );  
+  tabsContent.forEach(tabContent =>
+    tabContent.classList.remove('operations__content--active')
+  );
+  
+  //? Active tab
+  tabElem.classList.add('operations__tab--active');
+
+
+  //? Active content
+  const tabNumber = tabElem.dataset.tab;
+  const tabContent =document.querySelector(`.operations__content--${tabNumber}`)
+  tabContent.classList.add('operations__content--active');
+  console.log(tabContent);
+})
+
 
 
 // console.log(document.documentElement.style.fontSize = "16px");
@@ -208,3 +241,4 @@ document.querySelector(".nav__links").addEventListener("click", function(e){
 //   this.style.backgroundColor = randomColor();
 //   console.log('NAV', e.target, e.currentTarget);
 // }, true)
+
