@@ -12,6 +12,8 @@ const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
 const nav = document.querySelector('.nav');
+const header = document.querySelector('.header');
+
 
 const openModal = function () {
   modal.classList.toggle("hidden");
@@ -193,16 +195,64 @@ handleHover.bind(1)
 
 //?Sticky Navigation
 
-const initialCord = section1.getBoundingClientRect();
-window.addEventListener("scroll", function(){
-  if(this.window.scrollY > initialCord.top){
-    nav.classList.add("sticky")
+// const initialCord = section1.getBoundingClientRect();
+// window.addEventListener("scroll", function(){
+//   if(this.window.scrollY > initialCord.top){
+//     nav.classList.add("sticky")
+//   }else{
+//     nav.classList.remove("sticky")
+//   }
+//   console.log(initialCord);
+//   console.log(window.scrollY);
+// })
+
+
+//? Sticky navigation: Intersection Observer API
+
+// const obsCallback = function(entries, observer){
+//   entries.forEach(entry => {
+//     console.log(entry);
+//   })
+// }
+
+// const obsOptions = {
+// root: null, //? the element that the target is intersecting with: viewport
+// threshold: [0, 0.2], //? the percentage of the target element that is visible on the screen (0-1) before the callback is called
+
+
+// }
+
+// const observer = new IntersectionObserver(obsCallback, obsOptions);
+// observer.observe(section1); //? the target element to be observed
+
+const navHeight = nav.getBoundingClientRect().height
+
+const stickyNav = function(entries){
+  const [entry] = entries
+  console.log(entry);
+  if(!entry.isIntersecting){
+    nav.classList.add('sticky');
+    
   }else{
-    nav.classList.remove("sticky")
+    nav.classList.remove('sticky')
   }
-  console.log(initialCord);
-  console.log(window.scrollY);
+  
+}
+
+
+const observer = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`
 })
+
+observer.observe(header)
+
+
+
+
+
+
 
 // console.log(document.documentElement.style.fontSize = "16px");
 // console.log(document.head);
