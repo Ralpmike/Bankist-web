@@ -244,14 +244,12 @@ observer.observe(header);
 const allSections = document.querySelectorAll('.section');
 
 const revealSection = function (entries, observer) {
-
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
     entry.target.classList.remove('section--hidden');
     //? Unobserve: making sure the element is only observed once
     observer.unobserve(entry.target);
-    
-  })
+  });
 };
 
 const sectionObserver = new IntersectionObserver(revealSection, {
@@ -264,10 +262,8 @@ allSections.forEach(function (section) {
   section.classList.add('section--hidden');
 });
 
-
 //? Lazy loading images
 const imgTargets = document.querySelectorAll('img[data-src]');
-
 
 const loadingImg = function (entries, observer) {
   entries.forEach(entry => {
@@ -288,6 +284,78 @@ const imgObserver = new IntersectionObserver(loadingImg, {
 
 imgTargets.forEach(img => imgObserver.observe(img));
 
+//?Slider
+
+const slides = document.querySelectorAll('.slide');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
+const dotContainer = document.querySelector('.dots');
+const slider = document.querySelector('.slider');
+let curSlide = 0;
+const maxSlide = slides.length;
+
+// slider.style.transform = 'scale(0.4) translateX(-800px)';
+// slider.style.overflow = 'visible';
+
+// slides.forEach((s, i) => (s.style.transform = `translateX(${100 * i}%)`));
+
+const goToSlide = function (slide) {
+  slides.forEach(
+    (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
+  );
+};
+
+goToSlide(0);
+
+//?next slide
+const nextSlide = function () {
+  if (curSlide === maxSlide - 1) {
+    curSlide = 0;
+  } else {
+    curSlide++;
+  }
+  goToSlide(curSlide);
+};
+
+//?previous slide
+const prevSlide = function () {
+  if (curSlide === 0) {
+    curSlide = maxSlide - 1;
+  } else {
+    curSlide--;
+  }
+  goToSlide(curSlide);
+};
+
+
+
+btnRight.addEventListener('click', nextSlide);
+btnLeft.addEventListener('click', prevSlide);
+
+
+//  function () {
+//   if (curSlide === maxSlide - 1) {
+//     curSlide = 0;
+//   } else {
+//     curSlide++;
+//   }
+  
+//   goToSlide(curSlide);
+
+  // slides.forEach((s, i) => {
+  //   s.style.transform = `translateX(${100 * (i - curSlide)}%)`;
+  // });
+
+  // curSlide++;
+  // slides.forEach((s, i) => {
+  //   if( curSlide < slides.length ){
+  //     s.style.transform = `translateX(${100 * (i - curSlide)}%)`
+  //   } else {
+  //     curSlide = 0;
+  //     s.style.transform = `translateX(${100 * (i - curSlide)}%)`
+  //   }
+  // })
+// }
 
 // console.log(document.documentElement.style.fontSize = "16px");
 // console.log(document.head);
