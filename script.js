@@ -244,11 +244,14 @@ observer.observe(header);
 const allSections = document.querySelectorAll('.section');
 
 const revealSection = function (entries, observer) {
-  const [entry] = entries;
-  if (!entry.isIntersecting) return;
-  entry.target.classList.remove('section--hidden');
-  //? Unobserve: making sure the element is only observed once
-  observer.unobserve(entry.target);
+
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.remove('section--hidden');
+    //? Unobserve: making sure the element is only observed once
+    observer.unobserve(entry.target);
+    
+  })
 };
 
 const sectionObserver = new IntersectionObserver(revealSection, {
@@ -257,7 +260,6 @@ const sectionObserver = new IntersectionObserver(revealSection, {
 });
 
 allSections.forEach(function (section) {
-  console.log(section);
   sectionObserver.observe(section);
   section.classList.add('section--hidden');
 });
