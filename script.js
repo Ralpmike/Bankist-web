@@ -264,6 +264,31 @@ allSections.forEach(function (section) {
   section.classList.add('section--hidden');
 });
 
+
+//? Lazy loading images
+const imgTargets = document.querySelectorAll('img[data-src]');
+
+
+const loadingImg = function (entries, observer) {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.src = entry.target.dataset.src;
+    entry.target.addEventListener('load', function () {
+      entry.target.classList.remove('lazy-img');
+    });
+    observer.unobserve(entry.target);
+  });
+};
+
+const imgObserver = new IntersectionObserver(loadingImg, {
+  root: null,
+  threshold: 0,
+  rootMargin: '200px',
+});
+
+imgTargets.forEach(img => imgObserver.observe(img));
+
+
 // console.log(document.documentElement.style.fontSize = "16px");
 // console.log(document.head);
 // console.log(document.body);
