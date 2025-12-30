@@ -1,44 +1,41 @@
-"use strict";
+'use strict';
 
 ///////////////////////////////////////
 // Modal window
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
-const modal = document.querySelector(".modal");
-const overlay = document.querySelector(".overlay");
-const btnCloseModal = document.querySelector(".btn--close-modal");
-const btnsOpenModal = document.querySelectorAll(".btn--show-modal");
+const modal = document.querySelector('.modal');
+const overlay = document.querySelector('.overlay');
+const btnCloseModal = document.querySelector('.btn--close-modal');
+const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
 const nav = document.querySelector('.nav');
 const header = document.querySelector('.header');
 
-
 const openModal = function () {
-  modal.classList.toggle("hidden");
-  overlay.classList.tog("hidden");
+  modal.classList.toggle('hidden');
+  overlay.classList.tog('hidden');
 };
 
 const closeModal = function () {
-  modal.classList.add("hidden");
-  overlay.classList.add("hidden");
+  modal.classList.add('hidden');
+  overlay.classList.add('hidden');
 };
 
-
-btnsOpenModal.forEach(btn => btn.addEventListener("click", openModal)
-)
+btnsOpenModal.forEach(btn => btn.addEventListener('click', openModal));
 
 // for (let i = 0; i < btnsOpenModal.length; i++){
 //   btnsOpenModal[i].addEventListener("click", openModal);
 
 // }
 
-btnCloseModal.addEventListener("click", closeModal);
-overlay.addEventListener("click", closeModal);
+btnCloseModal.addEventListener('click', closeModal);
+overlay.addEventListener('click', closeModal);
 
-document.addEventListener("keydown", function (e) {
-  if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
     closeModal();
   }
 });
@@ -47,15 +44,18 @@ document.addEventListener("keydown", function (e) {
 //?Scrolling
 //? Impementing smooth scrolling
 
-
-btnScrollTo.addEventListener("click", function (e) {
-  const s1cords = section1.getBoundingClientRect()
+btnScrollTo.addEventListener('click', function (e) {
+  const s1cords = section1.getBoundingClientRect();
   console.log(s1cords.left, s1cords.top);
 
   console.log(e.target.getBoundingClientRect());
   console.log('Current scroll (x/y)', window.pageXOffset, window.pageYOffset);
 
-  console.log('height/width viewport', document.documentElement.clientHeight, document.documentElement.clientWidth);
+  console.log(
+    'height/width viewport',
+    document.documentElement.clientHeight,
+    document.documentElement.clientWidth
+  );
 
   //?scrolling
   // window.scrollTo(s1cords.left + window.pageXOffset, s1cords.top + window.pageYOffset)
@@ -67,9 +67,8 @@ btnScrollTo.addEventListener("click", function (e) {
   // });
 
   //? modern way
-  section1.scrollIntoView({behavior: "smooth"})
+  section1.scrollIntoView({ behavior: 'smooth' });
 });
-
 
 ///////////////////////////////////////
 //? page navigation
@@ -89,109 +88,107 @@ btnScrollTo.addEventListener("click", function (e) {
 //?1. Add event listener to common parent element
 //?2. Determine what element originated the event
 
-document.querySelector(".nav__links").addEventListener("click", function(e){
+document.querySelector('.nav__links').addEventListener('click', function (e) {
   e.preventDefault();
 
-  const targetEl = e.target
+  const targetEl = e.target;
 
-  document.querySelectorAll(".nav__link").forEach(function(el){
-    el.classList.remove("active__link")
+  document.querySelectorAll('.nav__link').forEach(function (el) {
+    el.classList.remove('active__link');
     console.log(el);
-  })
+  });
 
-  targetEl.classList.add("active__link")
+  targetEl.classList.add('active__link');
 
-  if(targetEl.classList.contains("nav__link")){
-    const id = targetEl.getAttribute("href");
-    document.querySelector(id).scrollIntoView({ behavior: "smooth" });
+  if (targetEl.classList.contains('nav__link')) {
+    const id = targetEl.getAttribute('href');
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
-})
-
+});
 
 //?DOM traversing
-const h1 = document.querySelector("h1")
+const h1 = document.querySelector('h1');
 
 //? tabbed component
-tabsContainer.addEventListener('click', function(e){
+tabsContainer.addEventListener('click', function (e) {
   const tabElem = e.target.closest('.operations__tab');
 
   //?guard clause
-  if(!tabElem) return
+  if (!tabElem) return;
   console.log(tabElem);
 
   //? Remove active classes
-  tabs.forEach(tab =>
-    tab.classList.remove('operations__tab--active')
-  );  
+  tabs.forEach(tab => tab.classList.remove('operations__tab--active'));
   tabsContent.forEach(tabContent =>
     tabContent.classList.remove('operations__content--active')
   );
-  
+
   //? Active tab
   tabElem.classList.add('operations__tab--active');
 
-
   //? Active content
   const tabNumber = tabElem.dataset.tab;
-  const tabContent =document.querySelector(`.operations__content--${tabNumber}`)
+  const tabContent = document.querySelector(
+    `.operations__content--${tabNumber}`
+  );
   tabContent.classList.add('operations__content--active');
   console.log(tabContent);
-})
+});
 
 //? Menu fade animation
 
-const handleHover = function(e){
-  if(e.target.classList.contains('nav__link')){
+const handleHover = function (e) {
+  if (e.target.classList.contains('nav__link')) {
     const link = e.target;
     const siblings = link.closest('.nav').querySelectorAll('.nav__link');
-    const logo = link.closest('.nav').querySelector('img')
+    const logo = link.closest('.nav').querySelector('img');
     siblings.forEach(sibling => {
-      if(sibling !== link){
-        sibling.style.opacity = this
+      if (sibling !== link) {
+        sibling.style.opacity = this;
       }
-    })
-    logo.style.opacity = this
+    });
+    logo.style.opacity = this;
   }
-}
+};
 
 //? passing "arguments" into callback functions
-nav.addEventListener('mouseover', 
-//   function(e){
-//   if(e.target.classList.contains('nav__link')){
-//     const link = e.target;
-//     console.log(link);
-//     const siblings = link.closest('.nav').querySelectorAll('.nav__link');
-//     const logo = link.closest('.nav').querySelector('img')
-//     console.log(siblings);
+nav.addEventListener(
+  'mouseover',
+  //   function(e){
+  //   if(e.target.classList.contains('nav__link')){
+  //     const link = e.target;
+  //     console.log(link);
+  //     const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+  //     const logo = link.closest('.nav').querySelector('img')
+  //     console.log(siblings);
 
-//     siblings.forEach(sibling => {
-//       if(sibling !== link){
-//         sibling.style.opacity = 0.5
-//       }
-//     })
+  //     siblings.forEach(sibling => {
+  //       if(sibling !== link){
+  //         sibling.style.opacity = 0.5
+  //       }
+  //     })
 
-//     logo.style.opacity = 0.5
-//   }
-// }
-handleHover.bind(0.5)
-)
+  //     logo.style.opacity = 0.5
+  //   }
+  // }
+  handleHover.bind(0.5)
+);
 
-nav.addEventListener('mouseout', 
-//   function(e){
-//   if(e.target.classList.contains('nav__link')){
-//     const link = e.target;
-//     const siblings = link.closest('.nav').querySelectorAll('.nav__link');
-//     const logo = link.closest('.nav').querySelector('img')
-//     siblings.forEach(sibling => {
-//       sibling.style.opacity = 1
-//     })
-//     logo.style.opacity = 1
-//   }
-// }
-handleHover.bind(1)
-)
-
-
+nav.addEventListener(
+  'mouseout',
+  //   function(e){
+  //   if(e.target.classList.contains('nav__link')){
+  //     const link = e.target;
+  //     const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+  //     const logo = link.closest('.nav').querySelector('img')
+  //     siblings.forEach(sibling => {
+  //       sibling.style.opacity = 1
+  //     })
+  //     logo.style.opacity = 1
+  //   }
+  // }
+  handleHover.bind(1)
+);
 
 //?Sticky Navigation
 
@@ -206,7 +203,6 @@ handleHover.bind(1)
 //   console.log(window.scrollY);
 // })
 
-
 //? Sticky navigation: Intersection Observer API
 
 // const obsCallback = function(entries, observer){
@@ -219,45 +215,56 @@ handleHover.bind(1)
 // root: null, //? the element that the target is intersecting with: viewport
 // threshold: [0, 0.2], //? the percentage of the target element that is visible on the screen (0-1) before the callback is called
 
-
 // }
 
 // const observer = new IntersectionObserver(obsCallback, obsOptions);
 // observer.observe(section1); //? the target element to be observed
 
-const navHeight = nav.getBoundingClientRect().height
+const navHeight = nav.getBoundingClientRect().height;
 
-const stickyNav = function(entries){
-  const [entry] = entries
+const stickyNav = function (entries) {
+  const [entry] = entries;
   console.log(entry);
-  if(!entry.isIntersecting){
+  if (!entry.isIntersecting) {
     nav.classList.add('sticky');
-    
-  }else{
-    nav.classList.remove('sticky')
+  } else {
+    nav.classList.remove('sticky');
   }
-  
-}
-
+};
 
 const observer = new IntersectionObserver(stickyNav, {
   root: null,
   threshold: 0,
-  rootMargin: `-${navHeight}px`
-})
+  rootMargin: `-${navHeight}px`,
+});
 
-observer.observe(header)
+observer.observe(header);
 
+//? Reveal sections
+const allSections = document.querySelectorAll('.section');
 
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  //? Unobserve: making sure the element is only observed once
+  observer.unobserve(entry.target);
+};
 
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+});
 
-
-
+allSections.forEach(function (section) {
+  console.log(section);
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
 
 // console.log(document.documentElement.style.fontSize = "16px");
 // console.log(document.head);
 // console.log(document.body);
-
 
 // const allSections = document.querySelectorAll(".section");
 
@@ -268,7 +275,6 @@ observer.observe(header)
 // console.log(allButtons);
 
 // console.log();
-
 
 // //?DOM traversing
 // const message = document.createElement("div");
@@ -301,8 +307,7 @@ observer.observe(header)
 //   Number.parseFloat(getComputedStyle(message).height, 10) + 30 + "px";
 
 //   //? Custom properties - CSS variables: This lives in the document root which is the root element of the document.
-// document.documentElement.style.setProperty("--color-primary", "orangered"); 
-
+// document.documentElement.style.setProperty("--color-primary", "orangered");
 
 // //? Attributes
 // const logo = document.querySelector(".nav__logo");
@@ -317,18 +322,11 @@ observer.observe(header)
 // console.log(logo.src);
 // console.log(logo.getAttribute("src"));
 
-
 // //? Data attributes
 // console.log(logo.dataset.versionNumber);
 
-
-
-
-
-
-
 // const randomInt = (min, max) =>
-//   Math.floor(Math.random() * (max - min + 1) + min); 
+//   Math.floor(Math.random() * (max - min + 1) + min);
 
 // const randomColor = () => `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
 
@@ -356,4 +354,3 @@ observer.observe(header)
 //   this.style.backgroundColor = randomColor();
 //   console.log('NAV', e.target, e.currentTarget);
 // }, true)
-
