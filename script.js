@@ -391,6 +391,30 @@ const slider = function () {
 
 slider();
 
+
+//?Life cycle of the DOM events
+
+//? The DOMContentLoaded event is fired when the initial HTML document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading
+document.addEventListener('DOMContentLoaded', function (e) {
+  console.log('HTML parsed and DOM tree built!', e);
+})
+
+//? The load event is fired when the whole page has loaded, including all dependent resources such as stylesheets and images
+window.addEventListener('load', function (e) {
+  console.log('Page fully loaded', e);
+})
+
+
+//? The beforeunload event is fired when the user is about to leave the page
+
+// window.addEventListener('beforeunload', function (e) {
+//   // e.preventDefault();
+//   console.log(e);
+//   e.returnValue = '';
+// })
+
+
+
 //  function () {
 //   if (curSlide === maxSlide - 1) {
 //     curSlide = 0;
